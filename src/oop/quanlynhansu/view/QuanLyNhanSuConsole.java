@@ -79,7 +79,7 @@ public class QuanLyNhanSuConsole {
                       break;
                   case 2:
                       //Phan bo nhan vien vao truong phong
-                      this.quanLyNhanSu.phanBoNhanVienVaoTruogPhong(sc);
+                        this.quanLyNhanSu.phanBoNhanVien(sc);
                         break;
                   case 3:
                       this.themNhanSu();
@@ -138,10 +138,10 @@ public class QuanLyNhanSuConsole {
     }
 
     public void inDanhSachNhanSu(){
-        String leftAlignFormat = "| %-5d | %-14s | %-13s | %-11.1f | %-13f | %-14s |%n";
-        System.out.format("+-------+----------------+---------------+-------------+---------------+----------------+%n");
-        System.out.format("| Mã số | Họ tên         | Số điện thoại | Số ngày làm | Lương một ngày|     Chức vụ    |%n");
-        System.out.format("+-------+----------------+---------------+-------------+---------------+----------------+%n");
+        String leftAlignFormat = "| %-5d | %-16s | %-13s | %-11.1f | %-13f | %-14s | %-14s | %-33s |%n";
+        System.out.format("+-------+------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
+        System.out.format("| Mã số |  Họ tên          | Số điện thoại | Số ngày làm | Lương một ngày|      Lương     |     Chức vụ    | Trưởng phòng/Số nhân viên/Cổ phần |%n");
+        System.out.format("+-------+------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
         for (int i = 0; i < quanLyNhanSu.getDanhSachNhanSu().size(); i++) {
 
             System.out.format(leftAlignFormat,
@@ -150,9 +150,12 @@ public class QuanLyNhanSuConsole {
                     this.quanLyNhanSu.getDanhSachNhanSu().get(i).getSoDienThoai(),
                     this.quanLyNhanSu.getDanhSachNhanSu().get(i).getSoNgayLam(),
                     this.quanLyNhanSu.getDanhSachNhanSu().get(i).getLuongMotNgay(),
-                    this.quanLyNhanSu.getDanhSachNhanSu().get(i).getChucVu());
+                    this.quanLyNhanSu.getDanhSachNhanSu().get(i).tinhLuong(),
+                    this.quanLyNhanSu.getDanhSachNhanSu().get(i).getChucVu(),
+                    this.quanLyNhanSu.getDanhSachNhanSu().get(i).getThongTinThem()
+                    );
         }
-        System.out.format("+-------+----------------+---------------+-------------+---------------+----------------+%n");
+        System.out.format("+-------+------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
     }
 
     public void start(){

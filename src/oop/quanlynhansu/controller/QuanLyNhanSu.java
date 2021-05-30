@@ -1,10 +1,13 @@
 package oop.quanlynhansu.controller;
 
+import oop.quanlynhansu.model.GiamDoc;
 import oop.quanlynhansu.model.NhanSu;
 import oop.quanlynhansu.model.NhanVien;
 import oop.quanlynhansu.model.TruongPhong;
+import oop.quanlynhansu.view.util.PrintFormat;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class QuanLyNhanSu {
@@ -16,74 +19,81 @@ public class QuanLyNhanSu {
 
     public QuanLyNhanSu(){
         this.danhSachNhanSu = new ArrayList<NhanSu>();
+        danhSachNhanSu.add(new NhanVien("Tuấn", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Vương", "1141234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Thiên", "1151234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Nhất", "1161234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Trịnh", "1171234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Duy", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Đồng", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Thành Bảo", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Triệu", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Hâm", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Hâm", "1131234567", 20, 100));
+
+        danhSachNhanSu.add(new TruongPhong("Hoàn", "1131234567", 20, 200));
+        danhSachNhanSu.add(new TruongPhong("Khoa", "1131234567", 20, 200));
+
+        danhSachNhanSu.add(new GiamDoc("Phúc", "2251234567", 20, 500, 30));
     }
 
-    private boolean tangSoLuongNhanVienCuaTruongPhong(NhanVien nv){
-        //Duyệt danh sách trưởng phòng để tìm trưởng phòng của nhân viên này
-        for (int  i = 0; i < danhSachNhanSu.size(); i++ ){
-            if(danhSachNhanSu.get(i) instanceof TruongPhong){
-                TruongPhong tp = (TruongPhong)danhSachNhanSu.get(i);
-                if(tp.getMaSo() == nv.getMaTruongPhong()){
-                    System.out.println("The manager info of this employee: ");
-                    tp.setSoNhanVien(tp.getSoNhanVien()+1);
-                    tp.xuatThongTin();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     public boolean them(NhanSu nhanSu) {
         if(nhanSu == null){
             return  false;
-        }
-        //Nếu là nhân viên, sau khi thêm phải tăng số lượng nhân viên của trưởng phòng giám sát lên 1
-        if(nhanSu instanceof NhanVien && ((NhanVien) nhanSu).getMaTruongPhong() != -1){
-            NhanVien nv = (NhanVien)nhanSu;
-            if(this.tangSoLuongNhanVienCuaTruongPhong(nv)){
-                nv.xuatThongTin();
-                danhSachNhanSu.add(nhanSu);
-                return true;
-            }else{
-                nv.setMaTruongPhong(-1); // reset if failed
-                System.out.println("Không tìm thấy trưởng phòng của nhân viên này !");
-                return false;
-            }
         }
         danhSachNhanSu.add(nhanSu);
         nhanSu.xuatThongTin();
         return true;
     }
 
-    public boolean phanBoNhanVienVaoTruogPhong(Scanner sc){
-        int maso = -1;
-        System.out.println("Enter the employee's id: ");
-        maso = Integer.parseInt(sc.nextLine());
-        for (NhanSu ns: danhSachNhanSu) {
-            if(ns.getMaSo() == maso){
-                if(ns instanceof NhanVien){
-                    System.out.print("Enter manager's id of this employee: ");
-                    NhanVien nv = (NhanVien)ns;
-                    nv.setMaTruongPhong(Integer.parseInt(sc.nextLine()));
-                    if(this.tangSoLuongNhanVienCuaTruongPhong(nv)){
-                        nv.xuatThongTin();
-                        System.out.println("Assign successfully!");
-                        return true;
-                    }else{
-                        nv.setMaTruongPhong(-1); // reset if failed
-                        System.out.println("Không tìm thấy trưởng phòng của nhân viên này !");
-                        return false;
-                    }
-                }else{
-                    System.out.println("This is not an employee!");
-                    return false;
+
+
+    public void phanBoNhanVien(Scanner sc){
+        int luaChon = -1;
+        List<NhanVien> dsNhanVienChuaPhanBo = new ArrayList<NhanVien>();
+        List<TruongPhong> dsTruongPhong = new ArrayList<TruongPhong>();
+        for (NhanSu ns : danhSachNhanSu){
+            if(ns instanceof NhanVien){
+                NhanVien nv = (NhanVien) ns;
+                if(nv.getMaTruongPhong() == 0){
+                    dsNhanVienChuaPhanBo.add(nv);
                 }
+            }else if(ns instanceof TruongPhong){
+                dsTruongPhong.add((TruongPhong) ns);
             }
         }
-        System.out.println("This id is not found!");
-        return false;
+
+        //Phân bổ các nhân viên vào trưởng phòng
+        for(NhanVien nv : dsNhanVienChuaPhanBo){
+            System.out.println("=====--PHÂN BỔ NHÂN VIÊN--=====");
+            nv.xuatThongTin();
+            System.out.println("/nChọn trưởng phòng để phân bổ: ");
+            for (int i = 0; i < dsTruongPhong.size(); i++) {
+                TruongPhong tp = dsTruongPhong.get(i);
+                System.out.printf("%d. %20s %5d\n", i+1, tp.getHoTen(), tp.getMaSo());
+            }
+            System.out.println("0. Không phân bổ.");
+            System.out.println("-1. Thoát chức năng phân bổ.");
+            System.out.print("Lựa chọn: ");
+            luaChon = Integer.parseInt(sc.nextLine());
+
+            if(luaChon == 0)
+                continue;
+
+            if(luaChon == -1)
+                return;
+
+            if(luaChon > 0 && luaChon <= dsTruongPhong.size()) {
+                nv.setMaTruongPhong(dsTruongPhong.get(luaChon-1).getMaSo());
+                dsTruongPhong.get(luaChon-1).tangSoNhanVien();
+            } else {
+                System.out.println("Lựa chọn không hợp lệ. Vui lòng tiến hành phân bổ lần sau.");
+            }
+        }
     }
+
+
 
     public boolean xoa(int maSo){
         //kiem tra ma nhan vien co ton
@@ -108,26 +118,24 @@ public class QuanLyNhanSu {
             for (NhanSu ns: danhSachNhanSu){
                 if (ns instanceof NhanVien){
                     NhanVien nv = (NhanVien)ns;
-                    if(nv.getMaTruongPhong() != -1 && nv.getMaTruongPhong() == tp.getMaSo()){
-                        nv.setMaTruongPhong(-1); // ngat tham chieu den truong phong
-                        nv.xuatThongTin();
-                        danhSachNhanSu.remove(tp); // Xoa truong phong;
-                        return true;
+                    if(nv.getMaTruongPhong() != 0 && nv.getMaTruongPhong() == tp.getMaSo()){
+                        nv.setMaTruongPhong(0); // ngat tham chieu den truong phon
                     }
                 }
             }
+            danhSachNhanSu.remove(tp); // Xoa truong phong;
+            return true;
         }
 
         //Neu la nhan vien thuong
         if(nhanSu instanceof NhanVien){
             NhanVien nv = (NhanVien) nhanSu;
-            if(nv.getMaTruongPhong() != -1){
+            if(nv.getMaTruongPhong() != 0){
                 for (NhanSu ns : danhSachNhanSu){
                     if(ns instanceof TruongPhong){
                         TruongPhong tp = (TruongPhong) ns;
                         if(tp.getMaSo() == nv.getMaTruongPhong()){
                             tp.setSoNhanVien(tp.getSoNhanVien() -1);
-                            tp.xuatThongTin();
                             danhSachNhanSu.remove(nv);
                             return true;
                         }
