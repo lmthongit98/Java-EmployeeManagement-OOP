@@ -27,9 +27,9 @@ public class QuanLyNhanSu {
         danhSachNhanSu.add(new NhanVien("Duy", "1131234567", 20, 100));
         danhSachNhanSu.add(new NhanVien("Đồng", "1131234567", 20, 100));
         danhSachNhanSu.add(new NhanVien("Nguyễn Thành Bảo", "1131234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Triệu", "1131234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Hâm", "1131234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Hâm", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Triệu", "1131234567", 22, 100));
+        danhSachNhanSu.add(new NhanVien("Hậu", "1131234567", 25, 100));
+        danhSachNhanSu.add(new NhanVien("Hâm", "1131234567", 25, 100));
 
         danhSachNhanSu.add(new TruongPhong("Hoàn", "1131234567", 20, 200));
         danhSachNhanSu.add(new TruongPhong("Khoa", "1131234567", 20, 200));
@@ -148,4 +148,57 @@ public class QuanLyNhanSu {
         danhSachNhanSu.remove(nhanSu);
         return  true;
     }
+
+    public double tinhTongLuongCongTy(){
+        double tongLuong = 0;
+        for(NhanSu ns : danhSachNhanSu){
+            tongLuong += ns.tinhLuong();
+        }
+
+        return tongLuong;
+    }
+
+    public List<NhanVien> timNhanVienThuongCoLuongCaoNhat(){
+        float maxLuong = 0;
+        List<NhanVien> dsNhanVienLuongCaoNhat = new ArrayList<NhanVien>();
+
+        //tim luong cao nhat
+        for (NhanSu ns : danhSachNhanSu){
+            if (ns instanceof NhanVien && ns.tinhLuong() > maxLuong){
+                maxLuong = ns.tinhLuong();
+            }
+        }
+
+        //tim nhan vien co luong cao nhat
+        for (NhanSu ns : danhSachNhanSu){
+            if (ns instanceof NhanVien && ns.tinhLuong() == maxLuong){
+                dsNhanVienLuongCaoNhat.add((NhanVien) ns);
+            }
+        }
+
+        return dsNhanVienLuongCaoNhat;
+    }
+
+
+    public List<TruongPhong> timTruongPhongCoSoLuongNhanVienNhieuNhat(){
+        int soLuongNVMax = 0;
+        List<TruongPhong> dsTruongPhongCoNhieuNhanVienNhat = new ArrayList<TruongPhong>();
+
+        //tim luong cao nhat
+        for (NhanSu ns : danhSachNhanSu){
+            if (ns instanceof TruongPhong && ((TruongPhong) ns).getSoNhanVien() > soLuongNVMax){
+                soLuongNVMax =((TruongPhong) ns).getSoNhanVien();
+            }
+        }
+
+        //tim nhan vien co luong cao nhat
+        for (NhanSu ns : danhSachNhanSu){
+            if (ns instanceof TruongPhong && ((TruongPhong) ns).getSoNhanVien() == soLuongNVMax){
+                dsTruongPhongCoNhieuNhanVienNhat.add((TruongPhong)ns);
+            }
+        }
+
+        return dsTruongPhongCoNhieuNhanVienNhat;
+    }
+
 }

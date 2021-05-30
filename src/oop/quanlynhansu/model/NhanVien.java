@@ -7,8 +7,13 @@ public class NhanVien extends NhanSu{
 
     public  NhanVien(){
         super();
-        this.maTruongPhong = -1;
+        this.maSo = STT++;
         this.luongMotNgay = 100;
+    }
+
+    public NhanVien(String hoTen, String soDienThoai, float soNgayLam, float luongMotNgay) {
+        super(hoTen, soDienThoai, soNgayLam, luongMotNgay);
+        this.maSo = STT++;
     }
 
     public int getMaTruongPhong() {
@@ -22,8 +27,8 @@ public class NhanVien extends NhanSu{
     @Override
     public void nhapThongTin(Scanner sc) {
         super.nhapThongTin(sc);
-        System.out.println("Nhập mã Trưởng Phòng: ");
-        this.maTruongPhong = Integer.parseInt(sc.nextLine());
+//        System.out.println("Nhập mã Trưởng Phòng: ");
+//        this.maTruongPhong = Integer.parseInt(sc.nextLine());
     }
 
     @Override
@@ -31,6 +36,11 @@ public class NhanVien extends NhanSu{
         System.out.println("===THÔNG TIN NHÂN VIÊN===");
         super.xuatThongTin();
         System.out.println("maTruongPhong = " + maTruongPhong);
+    }
+
+    @Override
+    public String getThongTinThem() {
+        return "Mã TP: " + this.maTruongPhong;
     }
 
     @Override

@@ -7,12 +7,14 @@ public class GiamDoc extends NhanSu{
 
     public GiamDoc(){
         super();
+        this.maSo = STT++;
         this.luongMotNgay = 300;
     }
 
-    public GiamDoc(int maSo, String hoTen, String soDienThoai, float soNgayLam, float luongMotNgay, int coPhan) {
-        super(maSo, hoTen, soDienThoai, soNgayLam, luongMotNgay);
+    public GiamDoc(String hoTen, String soDienThoai, float soNgayLam, float luongMotNgay, int coPhan) {
+        super(hoTen, soDienThoai, soNgayLam, luongMotNgay);
         this.coPhan = coPhan;
+        this.maSo = STT++;
     }
 
     public int getCoPhan() {
@@ -35,6 +37,11 @@ public class GiamDoc extends NhanSu{
         System.out.println("===THÔNG TIN GIÁM ĐỐC===");
         super.xuatThongTin();
         System.out.println("coPhan = " + coPhan);
+    }
+
+    @Override
+    public String getThongTinThem() {
+        return this.coPhan + "";
     }
 
     @Override

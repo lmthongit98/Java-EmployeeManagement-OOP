@@ -7,12 +7,17 @@ public class TruongPhong extends NhanSu{
 
     public TruongPhong(){
         super();
+        this.maSo = STT++;
         this.luongMotNgay = 200;
     }
 
-    public TruongPhong(int maSo, String hoTen, String soDienThoai, float soNgayLam, float luongMotNgay, int soNhanVien) {
-        super(maSo, hoTen, soDienThoai, soNgayLam, luongMotNgay);
-        this.soNhanVien = soNhanVien;
+    public TruongPhong(String hoTen, String soDienThoai, float soNgayLam, float luongMotNgay) {
+        super(hoTen, soDienThoai, soNgayLam, luongMotNgay);
+        this.maSo = STT++;
+    }
+
+    public void tangSoNhanVien(){
+        this.soNhanVien++;
     }
 
     public int getSoNhanVien() {
@@ -26,8 +31,8 @@ public class TruongPhong extends NhanSu{
     @Override
     public void nhapThongTin(Scanner sc) {
         super.nhapThongTin(sc);
-        System.out.println("Nhập số lượng nhân viên dưới quyền: ");
-        this.soNhanVien = Integer.parseInt(sc.nextLine());
+//        System.out.println("Nhập số lượng nhân viên dưới quyền: ");
+//        this.soNhanVien = Integer.parseInt(sc.nextLine());
     }
 
     @Override
@@ -35,6 +40,11 @@ public class TruongPhong extends NhanSu{
         System.out.println("===THÔNG TIN TRƯỞNG PHÒNG===");
         super.xuatThongTin();
         System.out.println("soNhanVien = " + soNhanVien);
+    }
+
+    @Override
+    public String getThongTinThem() {
+        return this.soNhanVien + "";
     }
 
     @Override

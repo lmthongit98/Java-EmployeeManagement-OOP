@@ -3,6 +3,7 @@ package oop.quanlynhansu.view;
 import oop.quanlynhansu.controller.QuanLyNhanSu;
 import oop.quanlynhansu.model.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class QuanLyNhanSuConsole {
@@ -97,9 +98,19 @@ public class QuanLyNhanSuConsole {
                       break;
                   case 7:
                       //Tim nhan vien thuong co luong cao nhat
+                      List<NhanVien> dsNhanVienLuongCaoNhat = this.quanLyNhanSu.timNhanVienThuongCoLuongCaoNhat();
+                      System.out.println("DANH SÁCH NHÂN VIÊN CÓ LƯƠNG CAO NHẤT");
+                      for (int i = 0; i < dsNhanVienLuongCaoNhat.size(); i++) {
+                          System.out.format("%d. Mã: %d, Tên: %s%n", i+1, dsNhanVienLuongCaoNhat.get(i).getMaSo(), dsNhanVienLuongCaoNhat.get(i).getHoTen());
+                      }
                       break;
                   case 8:
                       //Tim truong phong co so luong nhan vien duoi quyen nhieu nhat
+                      List<TruongPhong> dsTruongPhongCoNhanVienNhieuNhat = this.quanLyNhanSu.timTruongPhongCoSoLuongNhanVienNhieuNhat();
+                      System.out.println("DANH SÁCH TRƯỞNG PHÒNG CÓ SỐ LƯỢNG NHÂN VIÊN DƯỚI QUYỀN NHIỀU NHẤT");
+                      for (int i = 0; i < dsTruongPhongCoNhanVienNhieuNhat.size(); i++) {
+                          System.out.format("%d. Mã: %d, Tên: %s%n", i+1, dsTruongPhongCoNhanVienNhieuNhat.get(i).getMaSo(), dsTruongPhongCoNhanVienNhieuNhat.get(i).getHoTen());
+                      }
                       break;
                   case 9:
                       //Sap xep nhan vien toan cong ty theo thu tu abc
@@ -155,6 +166,8 @@ public class QuanLyNhanSuConsole {
                     this.quanLyNhanSu.getDanhSachNhanSu().get(i).getThongTinThem()
                     );
         }
+        System.out.format("+-------+------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
+        System.out.format("| Tổng lương: %f%n", this.quanLyNhanSu.tinhTongLuongCongTy());
         System.out.format("+-------+------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
     }
 

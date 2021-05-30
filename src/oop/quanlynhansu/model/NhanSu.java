@@ -8,13 +8,13 @@ public abstract class NhanSu {
     protected String soDienThoai;
     protected float soNgayLam;
     protected float luongMotNgay;
+    protected static int STT = 1;
 
     public NhanSu(){
 
     }
 
-    public NhanSu(int maSo, String hoTen, String soDienThoai, float soNgayLam, float luongMotNgay) {
-        this.maSo = maSo;
+    public NhanSu(String hoTen, String soDienThoai, float soNgayLam, float luongMotNgay) {
         this.hoTen = hoTen;
         this.soDienThoai = soDienThoai;
         this.soNgayLam = soNgayLam;
@@ -41,10 +41,6 @@ public abstract class NhanSu {
         return luongMotNgay;
     }
 
-    public void setMaSo(int maSo) {
-        this.maSo = maSo;
-    }
-
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
     }
@@ -62,8 +58,6 @@ public abstract class NhanSu {
     }
 
     public void nhapThongTin(Scanner sc){
-        System.out.println("Nhập mã số: ");
-        this.maSo = Integer.parseInt(sc.nextLine());
         System.out.println("Nhập họ tên: ");
         this.hoTen = sc.nextLine();
         System.out.println("Nhập số điện thoại: ");
@@ -79,6 +73,8 @@ public abstract class NhanSu {
         System.out.println("soNgayLam = " + soNgayLam);
         System.out.println("luongMotNgay = " + luongMotNgay);
     }
+
+    public abstract String getThongTinThem();
 
     public abstract float tinhLuong();
 
