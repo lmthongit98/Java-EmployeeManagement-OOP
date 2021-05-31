@@ -1,14 +1,14 @@
 package oop.quanlynhansu.controller;
 
+import oop.quanlynhansu.controller.util.UtilQLNS;
 import oop.quanlynhansu.model.GiamDoc;
 import oop.quanlynhansu.model.NhanSu;
 import oop.quanlynhansu.model.NhanVien;
 import oop.quanlynhansu.model.TruongPhong;
 import oop.quanlynhansu.view.util.PrintFormat;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class QuanLyNhanSu {
     private ArrayList<NhanSu> danhSachNhanSu;
@@ -19,22 +19,23 @@ public class QuanLyNhanSu {
 
     public QuanLyNhanSu(){
         this.danhSachNhanSu = new ArrayList<NhanSu>();
-        danhSachNhanSu.add(new NhanVien("Tuấn", "1131234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Vương", "1141234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Thiên", "1151234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Nhất", "1161234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Trịnh", "1171234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Duy", "1131234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Đồng", "1131234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Nguyễn Thành Bảo", "1131234567", 20, 100));
-        danhSachNhanSu.add(new NhanVien("Triệu", "1131234567", 22, 100));
-        danhSachNhanSu.add(new NhanVien("Hậu", "1131234567", 25, 100));
-        danhSachNhanSu.add(new NhanVien("Hâm", "1131234567", 25, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Văn Tuấn", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Lê Văn Vương", "1141234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Trần Văn Đại", "1151234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Văn Châu", "1161234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Thị Trịnh", "1171234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Văn Duy", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Văn Bảo", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Thành An", "1131234567", 20, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Quốc Triệu", "1131234567", 22, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Công Hậu", "1131234567", 25, 100));
+        danhSachNhanSu.add(new NhanVien("Nguyễn Văn Hâm", "1131234567", 25, 100));
 
-        danhSachNhanSu.add(new TruongPhong("Hoàn", "1131234567", 20, 200));
-        danhSachNhanSu.add(new TruongPhong("Khoa", "1131234567", 20, 200));
+        danhSachNhanSu.add(new TruongPhong("Nguyễn Văn Hoàn", "1131234567", 20, 200));
+        danhSachNhanSu.add(new TruongPhong("Nguyễn Văn Khoa", "1131234567", 20, 200));
 
-        danhSachNhanSu.add(new GiamDoc("Phúc", "2251234567", 20, 500, 30));
+        danhSachNhanSu.add(new GiamDoc("Nguyễn Văn Phúc", "2251234567", 20, 500, 30));
+        danhSachNhanSu.add(new GiamDoc("Nguyễn Văn Nam", "2251234567", 20, 500, 70));
     }
 
 
@@ -200,5 +201,53 @@ public class QuanLyNhanSu {
 
         return dsTruongPhongCoNhieuNhanVienNhat;
     }
+
+    public List<GiamDoc> timGiamDocCoSoLuongCoPhanNhieuNhat(){
+        int soCoPhanMax = 0;
+        List<GiamDoc> dsGiamDocCoSoCoPhanNhieuNhat = new ArrayList<GiamDoc>();
+
+        //tim co phan cao nhat
+        for (NhanSu ns : danhSachNhanSu){
+            if (ns instanceof GiamDoc && ((GiamDoc) ns).getCoPhan() > soCoPhanMax){
+                soCoPhanMax = ((GiamDoc) ns).getCoPhan();
+            }
+        }
+
+        //tim giam doc co co phan nhieu nhat
+        for (NhanSu ns : danhSachNhanSu){
+            if (ns instanceof GiamDoc && ((GiamDoc) ns).getCoPhan() == soCoPhanMax){
+                dsGiamDocCoSoCoPhanNhieuNhat.add((GiamDoc) ns);
+            }
+        }
+
+        return dsGiamDocCoSoCoPhanNhieuNhat;
+    }
+
+    public void sapXepNhanVienTheoThuTuAlpha(){
+        Collections.sort(this.danhSachNhanSu, (first, second) -> {
+            return UtilQLNS.tachTen(first.getHoTen()).compareTo(UtilQLNS.tachTen(second.getHoTen()));
+        });
+    }
+
+    public void sapXepNhanVienTheoThuTuLuongGiamDan(){
+        Collections.sort(this.danhSachNhanSu, (first, second) -> {
+            if (first.tinhLuong() - second.tinhLuong() > 0)
+                return -1;
+            return 1;
+        });
+    }
+
+
+    public void tinhVaXuatTongThuNhapCuaTungGiamDoc(double doanhThuThang){
+        double loiNhuanCongTy = doanhThuThang - this.tinhTongLuongCongTy();
+        System.out.println("TỔNG THU NHẬP CỦA CỦA TỪNG GIÁM ĐỐC");
+        for(NhanSu ns : danhSachNhanSu){
+            if(ns instanceof GiamDoc){
+                double tongThuNhap = ns.tinhLuong() + (((GiamDoc) ns).getCoPhan() * loiNhuanCongTy)/100;
+                System.out.format("Giám đốc: %s - Tổng thu nhập: %f%n", ns.getHoTen(), tongThuNhap);
+            }
+        }
+    }
+
 
 }

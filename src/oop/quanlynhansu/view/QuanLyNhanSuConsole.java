@@ -95,6 +95,7 @@ public class QuanLyNhanSuConsole {
                       break;
                   case 6:
                       //Tinh va xuat tong luong trong cong ty
+                      this.inDanhSachNhanSu();
                       break;
                   case 7:
                       //Tim nhan vien thuong co luong cao nhat
@@ -109,20 +110,36 @@ public class QuanLyNhanSuConsole {
                       List<TruongPhong> dsTruongPhongCoNhanVienNhieuNhat = this.quanLyNhanSu.timTruongPhongCoSoLuongNhanVienNhieuNhat();
                       System.out.println("DANH SÁCH TRƯỞNG PHÒNG CÓ SỐ LƯỢNG NHÂN VIÊN DƯỚI QUYỀN NHIỀU NHẤT");
                       for (int i = 0; i < dsTruongPhongCoNhanVienNhieuNhat.size(); i++) {
-                          System.out.format("%d. Mã: %d, Tên: %s%n", i+1, dsTruongPhongCoNhanVienNhieuNhat.get(i).getMaSo(), dsTruongPhongCoNhanVienNhieuNhat.get(i).getHoTen());
+                          System.out.format("%d. Mã: %d, Tên: %s, Số lượng nhân viên quản lý: %d %n",
+                                  i+1, dsTruongPhongCoNhanVienNhieuNhat.get(i).getMaSo(),
+                                  dsTruongPhongCoNhanVienNhieuNhat.get(i).getHoTen(),
+                                  dsTruongPhongCoNhanVienNhieuNhat.get(i).getSoNhanVien());
                       }
                       break;
                   case 9:
                       //Sap xep nhan vien toan cong ty theo thu tu abc
+                      this.quanLyNhanSu.sapXepNhanVienTheoThuTuAlpha();
+                      this.inDanhSachNhanSu();
                       break;
                   case 10:
                       //Sap xep nhan vien toan cong ty theo thu tu giam dan
+                      this.quanLyNhanSu.sapXepNhanVienTheoThuTuLuongGiamDan();
+                      this.inDanhSachNhanSu();
                       break;
                   case 11:
                       //Tim giam doc co so luong co phan nhieu nhat
+                      List<GiamDoc> dsGiamDocCoSoCoPhanNhieuNhat = this.quanLyNhanSu.timGiamDocCoSoLuongCoPhanNhieuNhat();
+                      System.out.println("DANH SÁCH TRƯỞNG PHÒNG CÓ SỐ LƯỢNG NHÂN VIÊN DƯỚI QUYỀN NHIỀU NHẤT");
+                      for (int i = 0; i < dsGiamDocCoSoCoPhanNhieuNhat.size(); i++) {
+                          System.out.format("%d. Mã: %d, Tên: %s, Số cổ phần: %d%% %n",
+                                  i+1, dsGiamDocCoSoCoPhanNhieuNhat.get(i).getMaSo(),
+                                  dsGiamDocCoSoCoPhanNhieuNhat.get(i).getHoTen(),
+                                  dsGiamDocCoSoCoPhanNhieuNhat.get(i).getCoPhan());
+                      }
                       break;
                   case 12:
                       //Tinh va xuat tong thu nhap cua tung giam doc
+                      this.quanLyNhanSu.tinhVaXuatTongThuNhapCuaTungGiamDoc(this.congTy.getDoanhThuThang());
                       break;
                   default:
                       break;
@@ -149,10 +166,10 @@ public class QuanLyNhanSuConsole {
     }
 
     public void inDanhSachNhanSu(){
-        String leftAlignFormat = "| %-5d | %-16s | %-13s | %-11.1f | %-13f | %-14s | %-14s | %-33s |%n";
-        System.out.format("+-------+------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
-        System.out.format("| Mã số |  Họ tên          | Số điện thoại | Số ngày làm | Lương một ngày|      Lương     |     Chức vụ    | Trưởng phòng/Số nhân viên/Cổ phần |%n");
-        System.out.format("+-------+------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
+        String leftAlignFormat = "| %-5d | %-18s | %-13s | %-11.1f | %-13f | %-14s | %-14s | %-33s |%n";
+        System.out.format("+-------+--------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
+        System.out.format("| Mã số |    Họ tên          | Số điện thoại | Số ngày làm | Lương một ngày|      Lương     |     Chức vụ    | Trưởng phòng/Số nhân viên/Cổ phần |%n");
+        System.out.format("+-------+--------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
         for (int i = 0; i < quanLyNhanSu.getDanhSachNhanSu().size(); i++) {
 
             System.out.format(leftAlignFormat,
@@ -166,9 +183,9 @@ public class QuanLyNhanSuConsole {
                     this.quanLyNhanSu.getDanhSachNhanSu().get(i).getThongTinThem()
                     );
         }
-        System.out.format("+-------+------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
+        System.out.format("+-------+--------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
         System.out.format("| Tổng lương: %f%n", this.quanLyNhanSu.tinhTongLuongCongTy());
-        System.out.format("+-------+------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
+        System.out.format("+-------+--------------------+---------------+-------------+---------------+----------------+----------------+-----------------------------------+%n");
     }
 
     public void start(){
